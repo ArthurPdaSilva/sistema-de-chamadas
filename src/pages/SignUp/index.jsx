@@ -40,6 +40,7 @@ export default function SignUp() {
             type="password"
             placeholder="********"
             value={password}
+            minLength={6}
             onChange={(e) => setPassword(e.target.value)}
           />
           <button type="submit">
