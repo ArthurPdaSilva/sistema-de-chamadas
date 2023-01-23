@@ -98,11 +98,13 @@ export default function AuthProvider({ children }) {
       value={{
         signed: !!user,
         user,
+        loadingAuth,
+        loading,
         signIn,
         signUp,
         logout,
-        loadingAuth,
-        loading,
+        storageUser,
+        setUser,
       }}
     >
       {children}
