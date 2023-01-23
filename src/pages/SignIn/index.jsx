@@ -25,7 +25,7 @@ export default function SignIn() {
         <form onSubmit={handleSubmit}>
           <h1>Entrar</h1>
           <input
-            type="text"
+            type="email"
             placeholder="email@gmail.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}

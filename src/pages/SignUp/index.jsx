@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import { AuthContext } from "../../contexts/auth";
 
 export default function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { signUp, loadingAuth } = useContext(AuthContext);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     if (name !== "" && email !== "" && password !== "") {
-      alert("Cadastrado com sucesso");
+      await signUp(email, password, name);
     }
   }
 
@@ -29,7 +31,7 @@ export default function SignUp() {
             onChange={(e) => setName(e.target.value)}
           />
           <input
-            type="text"
+            type="email"
             placeholder="email@gmail.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -40,7 +42,9 @@ export default function SignUp() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button type="submit">Cadastrar</button>
+          <button type="submit">
+            {loadingAuth ? "Carregando..." : "Cadastrar"}
+          </button>
         </form>
         <Link to="/">Já possui uma conta? Faça login</Link>
       </div>
