@@ -1,5 +1,8 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -12,9 +15,30 @@ export default function AuthProvider({ children }) {
   const [loadingAuth, setLoadingAuth] = useState(false);
   const navigate = useNavigate();
 
-  function signIn(email, password) {
-    console.log(email, password);
-    alert("Deu certo");
+  async function signIn(email, password) {
+    setLoadingAuth(true);
+    await signInWithEmailAndPassword(auth, email, password)
+      .then(async (value) => {
+        let uid = value.user.uid;
+        const docRef = doc(db, "users", uid);
+        const docSnap = await getDoc(docRef);
+        const data = {
+          uid: uid,
+          nome: docSnap.data().nome,
+          email: value.user.email,
+          avatarUrl: docSnap.data().avatarUrl,
+        };
+        setUser(data);
+        storageUser(data);
+        setLoadingAuth(false);
+        toast.success("bem-vindo de volta!");
+        navigate("/dashboard");
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoadingAuth(false);
+        toast.error("Algo deu errado");
+      });
   }
 
   async function signUp(email, password, name) {
@@ -42,6 +66,7 @@ export default function AuthProvider({ children }) {
           .catch((err) => {
             console.log(err);
             setLoadingAuth(false);
+            toast.error("Algo deu errado");
           });
       }
     );
