@@ -22,6 +22,6 @@ ul {
   list-style: none;
 }
 
-button {
+button, a {
   cursor: pointer;
 }
