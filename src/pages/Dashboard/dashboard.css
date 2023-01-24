@@ -1,68 +1,120 @@
-.container-center, .login {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+.new{
+  float: right;
+  margin-bottom: 1.5em;
+  background-color: #83bf02;
+  padding: 0.5em;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border:0;
+  font-weight: 600;
+  color: #FFF;
+  transition: ease-in-out 0.3s;
 }
 
-.container-center {
-    height: 100%;
-    background-color: #121212;
-    padding: 0 12px;
+.new svg{
+  margin-right: 5px;
 }
 
-.login {
-    background-color: #eaeaec;
-    width: 600px;
-    flex-direction: column;
+.new:hover{
+  background-color: #5fd204;
+  transform: scale(1.1);
 }
 
-.login-area {
-    display: flex;
-    justify-content: center;
-    background-color: #181c2e;
-    width: 100%;
+.dashboard{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-.login-area img {
-    width: 170px;
-    height: 130px;
-    padding: 20px;
+table{
+  border: 1px solid #CCC;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
 }
 
-form {
-    margin-top: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    width: 90%;
+table caption{
+  font-size: 1.5em;
+  margin: 0.5em 0  0.75em;
 }
 
-form h1 {
-    text-align: center;
-    margin-bottom: 1rem;
-    color: #181c2e;
+table tr{
+  background-color: #F8f8f8;
+  border:1px solid #DDD;
+  padding: 0.35em;
 }
 
-.login input, form button {
-    height: 35px;
-    border: 0;
-    border-radius: 4px;
+table th, table td{
+  padding: 0.60em;
+  text-align: center;
 }
 
-.login input {
-    margin-bottom: 1rem;
-    padding: 10px;
-    font-size: 15px;
-    background-color: #fff;
+table th{
+  font-size: 0.85em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
-form button {
-    height: 35px;
-    color: #fff;
-    font-size: 1.3rem;
-    background-color: #181c2e;
+table td .action{
+  border:0;
+  padding: 5px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-right: 3px;
 }
 
-.login a {
-    margin: 1.5rem 0;
-    color: #000;
+table td .action svg{
+  vertical-align: middle;
+}
+
+table td .badge{
+  padding: 3px;
+  border-radius: 3px;
+  color: #FFF;
+}
+
+@media screen and (max-width: 600px){
+    table{
+      border:0;
+    };
+
+    table caption{
+      font-size: 1.3em;
+    }
+
+    table thead{
+      border:none;
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+    }
+
+    table tr{
+      border-bottom: 3px solid #DDD;
+      display: block;
+      margin-bottom: 0.60em;
+    }
+
+    table td{
+      border-bottom: 1px solid #DDD;
+      display: block;
+      font-size: 0.8em;
+      text-align: right;
+    }
+
+    table td::before{
+      content: attr(data-label);
+      float: left;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
 }
