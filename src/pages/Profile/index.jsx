@@ -8,6 +8,9 @@ import { AuthContext } from "../../contexts/auth";
 
 import "./profile.css";
 import { toast } from "react-toastify";
+import { doc, updateDoc } from "firebase/firestore";
+import { db, storage } from "../../services/firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 export default function Profile() {
   const { user, storageUser, setUser, logout } = useContext(AuthContext);
@@ -31,6 +34,50 @@ export default function Profile() {
     }
   }
 
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (imageAvatar === null && name !== "") {
+      const docRef = doc(db, "users", user.uid);
+      await updateDoc(docRef, {
+        nome: name,
+      }).then(() => {
+        const data = {
+          ...user,
+          nome: name,
+        };
+        setUser(data);
+        storageUser(data);
+        toast.success("Atualizado com sucesso!");
+      });
+    } else if (name !== "" && imageAvatar !== null) {
+      handleUpload();
+    }
+  }
+
+  async function handleUpload() {
+    const currentUid = user.uid;
+    const uploadRef = ref(storage, `images/${currentUid}/${imageAvatar.name}`);
+    uploadBytes(uploadRef, imageAvatar).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then(async (downloadUrl) => {
+        let urlFoto = downloadUrl;
+        const docRef = doc(db, "users", user.uid);
+        await updateDoc(docRef, {
+          avatarUrl: urlFoto,
+          nome: name,
+        }).then(() => {
+          const data = {
+            ...user,
+            nome: name,
+            avatarUrl: urlFoto,
+          };
+          setUser(data);
+          storageUser(data);
+          toast.success("Atualizado com sucesso!");
+        });
+      });
+    });
+  }
+
   return (
     <div>
       <Header />
@@ -41,7 +88,7 @@ export default function Profile() {
         </Title>
 
         <div className="container">
-          <form className="form-profile">
+          <form className="form-profile" onSubmit={handleSubmit}>
             <label className="label-avatar">
               <span>
                 <FiUpload color="#FFF" size={25} />
@@ -86,7 +133,7 @@ export default function Profile() {
         </div>
 
         <div className="container">
-          <button className="logout-btn" onClick={logout}>
+          <button className="logout-btn" onClick={logout} type="submit">
             Sair
           </button>
         </div>

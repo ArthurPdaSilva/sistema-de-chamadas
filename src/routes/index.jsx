@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import Customers from "../pages/Customers";
 import Dashboard from "../pages/Dashboard";
 import Profile from "../pages/Profile";
 import SignIn from "../pages/SignIn";
@@ -23,6 +24,14 @@ export function RoutesApp() {
         element={
           <Private>
             <Profile />
+          </Private>
+        }
+      />
+      <Route
+        path="/customers"
+        element={
+          <Private>
+            <Customers />
           </Private>
         }
       />
