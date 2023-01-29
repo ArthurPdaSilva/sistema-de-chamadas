@@ -1,19 +1,18 @@
-.container, .label-avatar {
-    display: flex;
-    align-items: center;
-}
-
 .container{
+  display: flex;
   background-color: #f8f8f8;
   border-radius: 5px;
   padding: 0.8em;
+  align-items: center;
   margin-bottom: 1em;
 }
 
 .label-avatar{
   width: 280px;
   height: 280px;
+  display: flex;
   justify-content: center;
+  align-items: center;
   flex-direction: column;
   cursor: pointer;
 }

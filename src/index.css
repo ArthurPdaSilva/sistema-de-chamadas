@@ -1,27 +1,27 @@
-* {
-  margin: 0;
+*{
   padding: 0;
+  margin: 0;
   box-sizing: border-box;
 }
 
-html, body, #root {
+html, body, #root{
   height: 100%;
 }
 
-body {
-  font-size: 14px;
+body{
+  font: 14px;
   font-family: sans-serif;
   background-color: #EFEFEF;
 }
 
-a {
+a{
   text-decoration: none;
 }
 
-ul {
+ul{
   list-style: none;
 }
 
-button, a {
+button{
   cursor: pointer;
 }

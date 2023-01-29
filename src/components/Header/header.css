@@ -1,85 +1,94 @@
-.sidebar {
-    margin: 0;
-    padding: 0;
-    background-color: #181c2e;
-    position: fixed;
-    height: 100%;
-    width: 200px;
-    overflow: auto;
+.sidebar{
+  width: 200px;
+  margin: 0;
+  padding: 0;
+  background-color: #181c2e;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
 }
 
-.sidebar div {
-    background: url('../../assets/cover.png');
-    background-color: #181c2e;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 150px;
-    padding-top: 30px;
+.sidebar div{
+  background: url('../../assets/cover.png');
+  background-color: #181c2e;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 150px;
+}
+
+.sidebar div{
+  padding-top: 30px;
 }
 
 .sidebar div img {
-    width: 90px;
-    height: 90px;
-    display: block;
-    margin: auto;
-    border-radius: 50%;
-    object-fit: cover;
-    filter: drop-shadow(2px 3px 6px #121212);
-    -webkit-filter: drop-shadow(2px 3px 6px #121212);
+  width: 90px;
+  height: 90px;
+  display: block;
+  margin: auto;
+  border-radius: 50%;
+  object-fit: cover;
+  filter: drop-shadow(2px 3px 6px #121212);
+  -webkit-filter: drop-shadow(2px 3px 6px #121212);
 }
 
 .sidebar a {
-    display: flex;
-    text-decoration: none;
-    flex-direction: row;
-    align-items: center;
-    transition: ease-in-out .4s;
-    color: rgba(255, 255, 255, .7);
-    padding: 16px;
+  display: block;
+  padding: 16px;
+  display: flex;
+  text-decoration: none;
+  color: rgba(255,255,255, 0.7);
+  flex-direction: row;
+  align-items: center;
+  transition: ease-in-out 0.4s;
 }
 
-.sidebar a svg {
-    margin-right: .5rem;
+.sidebar a svg{
+  margin-right: 0.5rem;
 }
 
-.sidebar a:hover {
-    background-color: #121212;
-    color: white;
+.sidebar a:hover{
+  background-color: #121212;
+  color: #FFF;
 }
 
-.content {
-    margin-left: 200px;
-    padding: 1px 16px;
+.content{
+  margin-left: 200px;
+  padding: 1px 16px;
 }
 
-@media (max-width: 700px) {
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
+@media screen and (max-width: 700px){
+  .sidebar{
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
 
-    .content {
-        margin-left: 0;
-    }
+  div.content{
+    margin-left: 0;
+  }
 
-    .sidebar a {
-        float: left;
-    }
+  .sidebar a{
+    float: left;
+  }
 
-    .sidebar div, .sidebar a svg  {
-        display: none;
-    }
+  .sidebar div{
+    display: none;
+  }
+
+  .sidebar a svg{
+    display: none;
+  }
 }
 
-@media (max-width: 400px) {
-    .sidebar a {
-        text-align: center;
-        float: none;
-    }
 
-    .sidebar a svg {
-        display: none;
-    }
+@media screen and (max-width: 400px){
+  .sidebar a{
+    text-align: center;
+    float: none;
+  }
+  
+  .sidebar a svg{
+    display: none;
+  }
 }

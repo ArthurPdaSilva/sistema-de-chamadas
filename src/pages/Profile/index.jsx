@@ -6,18 +6,22 @@ import { FiSettings, FiUpload } from "react-icons/fi";
 import avatar from "../../assets/avatar.png";
 import { AuthContext } from "../../contexts/auth";
 
-import "./profile.css";
-import { toast } from "react-toastify";
-import { doc, updateDoc } from "firebase/firestore";
 import { db, storage } from "../../services/firebase";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { doc, updateDoc } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
+import { toast } from "react-toastify";
+
+import "./profile.css";
 
 export default function Profile() {
   const { user, storageUser, setUser, logout } = useContext(AuthContext);
-  const [name, setName] = useState(user && user.nome);
-  const [email, setEmail] = useState(user && user.email);
+
   const [avatarUrl, setAvatarUrl] = useState(user && user.avatarUrl);
   const [imageAvatar, setImageAvatar] = useState(null);
+
+  const [nome, setNome] = useState(user && user.nome);
+  const [email] = useState(user && user.email);
 
   function handleFile(e) {
     if (e.target.files[0]) {
@@ -27,55 +31,59 @@ export default function Profile() {
         setImageAvatar(image);
         setAvatarUrl(URL.createObjectURL(image));
       } else {
-        toast.error("Envie uma image válida!");
+        alert("Envie uma imagem do tipo PNG ou JPEG");
         setImageAvatar(null);
         return;
       }
     }
   }
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    if (imageAvatar === null && name !== "") {
-      const docRef = doc(db, "users", user.uid);
-      await updateDoc(docRef, {
-        nome: name,
-      }).then(() => {
-        const data = {
-          ...user,
-          nome: name,
-        };
-        setUser(data);
-        storageUser(data);
-        toast.success("Atualizado com sucesso!");
-      });
-    } else if (name !== "" && imageAvatar !== null) {
-      handleUpload();
-    }
-  }
-
   async function handleUpload() {
     const currentUid = user.uid;
+
     const uploadRef = ref(storage, `images/${currentUid}/${imageAvatar.name}`);
+
     uploadBytes(uploadRef, imageAvatar).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then(async (downloadUrl) => {
-        let urlFoto = downloadUrl;
+      getDownloadURL(snapshot.ref).then(async (downloadURL) => {
+        let urlFoto = downloadURL;
+
         const docRef = doc(db, "users", user.uid);
         await updateDoc(docRef, {
           avatarUrl: urlFoto,
-          nome: name,
+          nome: nome,
         }).then(() => {
-          const data = {
+          let data = {
             ...user,
-            nome: name,
+            nome: nome,
             avatarUrl: urlFoto,
           };
+
           setUser(data);
           storageUser(data);
           toast.success("Atualizado com sucesso!");
         });
       });
     });
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    if (imageAvatar === null && nome !== "") {
+      const docRef = doc(db, "users", user.uid);
+      await updateDoc(docRef, {
+        nome: nome,
+      }).then(() => {
+        let data = {
+          ...user,
+          nome: nome,
+        };
+
+        setUser(data);
+        storageUser(data);
+        toast.success("Atualizado com sucesso!");
+      });
+    } else if (nome !== "" && imageAvatar !== null) handleUpload();
   }
 
   return (
@@ -115,25 +123,19 @@ export default function Profile() {
             <label>Nome</label>
             <input
               type="text"
-              placeholder="Seu nome"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
             />
 
             <label>Email</label>
-            <input
-              type="email"
-              placeholder="teste@teste.com"
-              disabled={true}
-              value={email}
-            />
+            <input type="text" value={email} disabled={true} />
 
             <button type="submit">Salvar</button>
           </form>
         </div>
 
         <div className="container">
-          <button className="logout-btn" onClick={logout} type="submit">
+          <button className="logout-btn" onClick={() => logout()}>
             Sair
           </button>
         </div>

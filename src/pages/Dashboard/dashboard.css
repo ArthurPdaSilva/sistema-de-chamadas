@@ -79,6 +79,22 @@ table td .badge{
   color: #FFF;
 }
 
+.dashboard span{
+  margin: 2em 0;
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+.btn-more{
+  margin: 1.5em 0;
+  padding: 0.5em 1em;
+  background-color: #181c2e;
+  border:0;
+  border-radius: 5px;
+  font-size: 1.1em;
+  color: #FFF;
+}
+
 @media screen and (max-width: 600px){
     table{
       border:0;

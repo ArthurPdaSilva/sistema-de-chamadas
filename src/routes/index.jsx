@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Customers from "../pages/Customers";
 import Dashboard from "../pages/Dashboard";
+import New from "../pages/New";
 import Profile from "../pages/Profile";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
@@ -11,6 +12,7 @@ export function RoutesApp() {
     <Routes>
       <Route path="/" element={<SignIn />} />
       <Route path="/register" element={<SignUp />} />
+
       <Route
         path="/dashboard"
         element={
@@ -19,6 +21,7 @@ export function RoutesApp() {
           </Private>
         }
       />
+
       <Route
         path="/profile"
         element={
@@ -27,11 +30,30 @@ export function RoutesApp() {
           </Private>
         }
       />
+
       <Route
         path="/customers"
         element={
           <Private>
             <Customers />
+          </Private>
+        }
+      />
+
+      <Route
+        path="/new"
+        element={
+          <Private>
+            <New />
+          </Private>
+        }
+      />
+
+      <Route
+        path="/new/:id"
+        element={
+          <Private>
+            <New />
           </Private>
         }
       />

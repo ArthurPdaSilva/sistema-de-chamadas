@@ -1,10 +1,13 @@
-import { addDoc, collection } from "firebase/firestore";
-import React, { useState } from "react";
-import { FiUser } from "react-icons/fi";
-import { toast } from "react-toastify";
+import { useState } from "react";
 import Header from "../../components/Header";
 import Title from "../../components/Title";
+
+import { FiUser } from "react-icons/fi";
+
 import { db } from "../../services/firebase";
+import { addDoc, collection } from "firebase/firestore";
+
+import { toast } from "react-toastify";
 
 export default function Customers() {
   const [nome, setNome] = useState("");
@@ -13,6 +16,7 @@ export default function Customers() {
 
   async function handleRegister(e) {
     e.preventDefault();
+
     if (nome !== "" && cnpj !== "" && endereco !== "") {
       await addDoc(collection(db, "customers"), {
         nomeFantasia: nome,
@@ -23,17 +27,21 @@ export default function Customers() {
           setNome("");
           setCnpj("");
           setEndereco("");
-          toast.success("Empresa registrada");
+          toast.success("Empresa registrada!");
         })
-        .catch((err) => {
-          toast.error("Falha ao cadastrar");
+        .catch((error) => {
+          console.log(error);
+          toast.error("Erro ao fazer o cadastro.");
         });
-    } else toast.error("Preencha todos os campos!");
+    } else {
+      toast.error("Preencha todos os campos!");
+    }
   }
 
   return (
     <div>
       <Header />
+
       <div className="content">
         <Title name="Clientes">
           <FiUser size={25} />
@@ -41,13 +49,14 @@ export default function Customers() {
 
         <div className="container">
           <form className="form-profile" onSubmit={handleRegister}>
-            <label>Nome Fantasia</label>
+            <label>Nome fantasia</label>
             <input
               type="text"
               placeholder="Nome da empresa"
               value={nome}
               onChange={(e) => setNome(e.target.value)}
             />
+
             <label>CNPJ</label>
             <input
               type="text"
@@ -55,6 +64,7 @@ export default function Customers() {
               value={cnpj}
               onChange={(e) => setCnpj(e.target.value)}
             />
+
             <label>Endereço</label>
             <input
               type="text"
